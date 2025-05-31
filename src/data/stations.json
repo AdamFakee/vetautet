@@ -1,0 +1,272 @@
+[
+    {
+        "station_id": 1,
+        "station_name": "Ga Hà Nội",
+        "address": "120 Lê Duẩn, Quận Hoàn Kiếm, Hà Nội",
+        "description": "Ga tàu chính của thủ đô Hà Nội, trung tâm kết nối các tuyến đường sắt Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T15:47:27.000Z",
+        "location": "north"
+    },
+    {
+        "station_id": 2,
+        "station_name": "Ga Sài Gòn",
+        "address": "1 Nguyễn Thông, Quận 3, TP. Hồ Chí Minh",
+        "description": "Ga tàu chính của TP. Hồ Chí Minh, phục vụ các tuyến đường sắt Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T15:47:47.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 3,
+        "station_name": "Ga Đà Nẵng",
+        "address": "202 Hải Phòng, Quận Thanh Khê, Đà Nẵng",
+        "description": "Ga tàu trung tâm của miền Trung, kết nối các tuyến đường sắt Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T15:48:14.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 4,
+        "station_name": "Ga Huế",
+        "address": "2 Bùi Thị Xuân, TP. Huế, Thừa Thiên Huế",
+        "description": "Ga tàu tại thành phố Huế, phục vụ các tuyến đường sắt khu vực miền Trung.",
+        "status": "active",
+        "created_at": "2025-05-23T15:48:35.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 5,
+        "station_name": "Ga Vinh",
+        "address": "1 Lê Nin, TP. Vinh, Nghệ An",
+        "description": "Ga tàu lớn tại Nghệ An, phục vụ các tuyến đường sắt Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T15:48:47.000Z",
+        "location": "north"
+    },
+    {
+        "station_id": 6,
+        "station_name": "Ga Nha Trang",
+        "address": "17 Thái Nguyên, TP. Nha Trang, Khánh Hòa",
+        "description": "Ga tàu tại thành phố biển Nha Trang, phục vụ hành khách du lịch và tuyến Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T15:49:03.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 7,
+        "station_name": "Ga Đồng Hới",
+        "address": "2 Tiểu khu 4, Nam Lý, TP. Đồng Hới, Quảng Bình",
+        "description": "Ga tàu tại Quảng Bình, điểm dừng quan trọng trên tuyến Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T15:49:19.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 8,
+        "station_name": "Ga Thanh Hóa",
+        "address": "37 Đại lộ Lê Lợi, TP. Thanh Hóa, Thanh Hóa",
+        "description": "Ga tàu chính tại Thanh Hóa, phục vụ các tuyến đường sắt khu vực Bắc Trung Bộ.",
+        "status": "active",
+        "created_at": "2025-05-23T15:49:33.000Z",
+        "location": "north"
+    },
+    {
+        "station_id": 9,
+        "station_name": "Ga Biên Hòa",
+        "address": "1 Hưng Đạo Vương, TP. Biên Hòa, Đồng Nai",
+        "description": "Ga tàu tại Đồng Nai, phục vụ các tuyến đường sắt khu vực phía Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T15:49:45.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 10,
+        "station_name": "Ga Lào Cai",
+        "address": "Đường Khánh Yên, TP. Lào Cai, Lào Cai",
+        "description": "Ga tàu tại Lào Cai, phục vụ tuyến Hà Nội - Lào Cai và các khu vực Tây Bắc.",
+        "status": "active",
+        "created_at": "2025-05-23T15:50:01.000Z",
+        "location": "north"
+    },
+    {
+        "station_id": 11,
+        "station_name": "Ga Nam Định",
+        "address": "121 Lê Đức Thọ, TP. Nam Định, Nam Định",
+        "description": "Ga tàu chính tại Nam Định, phục vụ các tuyến đường sắt Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "north"
+    },
+    {
+        "station_id": 12,
+        "station_name": "Ga Phủ Lý",
+        "address": "1 Nguyễn Văn Trỗi, TP. Phủ Lý, Hà Nam",
+        "description": "Ga tàu tại Hà Nam, điểm dừng trên tuyến đường sắt Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "north"
+    },
+    {
+        "station_id": 13,
+        "station_name": "Ga Đồng Lê",
+        "address": "Quốc lộ 1A, Tuyên Hóa, Quảng Bình",
+        "description": "Ga tàu tại Quảng Bình, phục vụ các tuyến đường sắt khu vực miền Trung.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 14,
+        "station_name": "Ga Quy Nhơn",
+        "address": "Đường Lê Hồng Phong, TP. Quy Nhơn, Bình Định",
+        "description": "Ga tàu tại Quy Nhơn, phục vụ hành khách du lịch và tuyến Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 15,
+        "station_name": "Ga Diêu Trì",
+        "address": "Quốc lộ 1A, Tuy Phước, Bình Định",
+        "description": "Ga tàu gần Quy Nhơn, hỗ trợ các tuyến đường sắt khu vực miền Trung.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 16,
+        "station_name": "Ga Tuy Hòa",
+        "address": "Đường Lê Duẩn, TP. Tuy Hòa, Phú Yên",
+        "description": "Ga tàu tại Phú Yên, điểm dừng quan trọng trên tuyến Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 17,
+        "station_name": "Ga Tháp Chàm",
+        "address": "Đường 21/8, Phan Rang - Tháp Chàm, Ninh Thuận",
+        "description": "Ga tàu tại Ninh Thuận, phục vụ hành khách khu vực Nam Trung Bộ.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 18,
+        "station_name": "Ga Long Khánh",
+        "address": "Đường Nguyễn Văn Cừ, TP. Long Khánh, Đồng Nai",
+        "description": "Ga tàu tại Đồng Nai, hỗ trợ các tuyến đường sắt khu vực phía Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 19,
+        "station_name": "Ga Yên Bái",
+        "address": "Đường Điện Biên, TP. Yên Bái, Yên Bái",
+        "description": "Ga tàu trên tuyến Hà Nội - Lào Cai, phục vụ khu vực Tây Bắc.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "north"
+    },
+    {
+        "station_id": 20,
+        "station_name": "Ga Phố Lu",
+        "address": "Thị trấn Phố Lu, Bảo Thắng, Lào Cai",
+        "description": "Ga tàu trên tuyến Hà Nội - Lào Cai, gần khu vực biên giới.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "north"
+    },
+    {
+        "station_id": 21,
+        "station_name": "Ga Đông Hà",
+        "address": "Đường Lê Lợi, TP. Đông Hà, Quảng Trị",
+        "description": "Ga tàu tại Quảng Trị, điểm dừng trên tuyến Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 22,
+        "station_name": "Ga Tam Kỳ",
+        "address": "Đường Phan Châu Trinh, TP. Tam Kỳ, Quảng Nam",
+        "description": "Ga tàu tại Quảng Nam, phục vụ các tuyến đường sắt miền Trung.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 23,
+        "station_name": "Ga Quảng Ngãi",
+        "address": "Đường Nguyễn Tri Phương, TP. Quảng Ngãi, Quảng Ngãi",
+        "description": "Ga tàu chính tại Quảng Ngãi, hỗ trợ tuyến Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 24,
+        "station_name": "Ga Sông Mao",
+        "address": "Quốc lộ 1A, Sông Mao, Bình Thuận",
+        "description": "Ga tàu nhỏ tại Bình Thuận, phục vụ hành khách khu vực Nam Trung Bộ.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 25,
+        "station_name": "Ga Mương Mán",
+        "address": "Quốc lộ 1A, Hàm Thuận Nam, Bình Thuận",
+        "description": "Ga tàu tại Bình Thuận, điểm dừng trên tuyến Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 26,
+        "station_name": "Ga Ninh Bình",
+        "address": "1 Hoàng Hoa Thám, TP. Ninh Bình, Ninh Bình",
+        "description": "Ga tàu tại Ninh Bình, phục vụ hành khách du lịch và tuyến Bắc - Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "north"
+    },
+    {
+        "station_id": 27,
+        "station_name": "Ga Bỉm Sơn",
+        "address": "Đường Trần Phú, Thị xã Bỉm Sơn, Thanh Hóa",
+        "description": "Ga tàu tại Thanh Hóa, hỗ trợ các tuyến đường sắt Bắc Trung Bộ.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "north"
+    },
+    {
+        "station_id": 28,
+        "station_name": "Ga Minh Khôi",
+        "address": "Quốc lộ 1A, Minh Hóa, Quảng Bình",
+        "description": "Ga tàu nhỏ tại Quảng Bình, phục vụ khu vực miền Trung.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 29,
+        "station_name": "Ga Dĩ An",
+        "address": "Đường Nguyễn An Ninh, TP. Dĩ An, Bình Dương",
+        "description": "Ga tàu tại Bình Dương, hỗ trợ các tuyến đường sắt khu vực phía Nam.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "south"
+    },
+    {
+        "station_id": 30,
+        "station_name": "Ga Bắc Giang",
+        "address": "Đường Xương Giang, TP. Bắc Giang, Bắc Giang",
+        "description": "Ga tàu tại Bắc Giang, phục vụ các tuyến đường sắt khu vực Đông Bắc.",
+        "status": "active",
+        "created_at": "2025-05-23T16:04:31.000Z",
+        "location": "north"
+    }
+]
