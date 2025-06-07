@@ -1,7 +1,7 @@
 const { DatabaseConfig } = require('../../configs/database.config');
 const { DataTypes } = require('sequelize');
 
-const trainSchema = DatabaseConfig.sequelize_train_system.define("Train", {
+const trainSchema = new DatabaseConfig().getMasterDb().define("Train", {
     train_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

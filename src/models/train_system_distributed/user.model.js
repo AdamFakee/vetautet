@@ -1,7 +1,7 @@
-const { DatabaseConfig } = require('../../../configs/database.config');
+const { DatabaseConfig } = require('../../configs/database.config');
 const { DataTypes } = require('sequelize');
 
-const userSchema = DatabaseConfig.sequelize_train_system_user.define("User", {
+const userSchema = new DatabaseConfig().getSlaveDb().define("User", {
     user_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -45,4 +45,4 @@ const userSchema = DatabaseConfig.sequelize_train_system_user.define("User", {
 });
 
 
-module.exports.userModel_user = userSchema;
+module.exports.userModel_slave = userSchema;

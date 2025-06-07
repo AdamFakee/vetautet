@@ -1,16 +1,38 @@
 'use strict';
 
+const { ticketPurchaseModel_slave } = require("../../models/train_system_distributed/ticketPurchase.model");
+const { QueryTypes } = require("sequelize");
 
-const { ticketPurchaseModel_north_to_sourth } = require("../../models/distributed/train_system_north_to_sourth/ticketPurchase.model");
-const { ticketPurchaseModel_sourth_to_north } = require("../../models/distributed/train_system_sourth_to_nourth/ticketPurchase.model");
+
 
 const createTicketPurchase = async (payload, opts={}) => {    
-    const { direction } = payload;
-    console.log(payload)
-    if(direction == 'south_to_north') {
-        return await ticketPurchaseModel_sourth_to_north.create(payload);
-    } else {
-        return await ticketPurchaseModel_north_to_sourth.create(payload);
+    const {
+        user_id,
+        ticket_id,
+        status = 'active'
+    } = payload;
+    
+    try {
+        const result = await ticketPurchaseModel_slave.sequelize.query(
+            `DECLARE @InsertedRows TABLE (id UNIQUEIDENTIFIER);
+             INSERT INTO ticket_purchases 
+             (id, user_id, ticket_id, purchase_time, status)
+             OUTPUT inserted.id INTO @InsertedRows
+             VALUES (NEWID(), ?, ?, GETDATE(), ?);
+             SELECT id FROM @InsertedRows;`,
+            {
+                replacements: [
+                    user_id,
+                    ticket_id,
+                    status
+                ],
+                type: QueryTypes.SELECT,
+            }
+        );
+        return;
+    } catch (error) {
+        console.error('Lỗi khi thêm ticket purchase vào SlaveDB:', error);
+        return;
     }
 }
 

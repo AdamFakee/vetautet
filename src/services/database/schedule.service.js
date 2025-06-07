@@ -5,14 +5,15 @@ const { scheduleModel } = require('../../models/train_system/schedule.model');
 
 const getAllSchedules = async (opts = {}) => {
     const { limit, page } = opts;
-    const offset = (page - 1) * limit;
+    const offset = (page - 1) * limit || 0;
 
     const query = `
-        SELECT * 
+        SELECT *
         FROM schedules
         JOIN routes ON routes.route_id = schedules.route_id
-        WHERE schedules.status = 'active' 
-        LIMIT ${limit} OFFSET ${offset}
+        WHERE schedules.status = 'active'
+        ORDER BY schedules.schedule_id
+        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY;
     `;
 
     return await rawQueryFrameHelper(query);
@@ -45,7 +46,7 @@ const createSchedule = async (payload) => {
 // tạo 1 list data để test 
 const createListSchedules = async () => {
     const amount = data.length;
-
+    
     const promises = [];
     for(let i = 0; i < amount; i++) {
         promises.push(createSchedule(data[i]))

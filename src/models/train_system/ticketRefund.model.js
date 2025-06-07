@@ -1,7 +1,7 @@
 const { DatabaseConfig } = require('../../configs/database.config');
 const { DataTypes } = require('sequelize');
 
-const ticketRefundSchema = DatabaseConfig.sequelize_train_system.define("TicketRefund", {
+const ticketRefundSchema = new DatabaseConfig().getMasterDb().define("TicketRefund", {
     refund_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

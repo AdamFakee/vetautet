@@ -6,6 +6,7 @@ const cors = require("cors");
 const { DatabaseConfig } = require('./configs/database.config.js'); 
 const { TicketConsumer } = require('./services/others/kafka/consumer.kafka.service.js');
 const os = require('os');
+const { QueryTypes } = require("sequelize");
 
 // // Lấy thông tin chi tiết về từng core
 // const cpus = os.cpus();
@@ -29,8 +30,7 @@ ticketConsumer.start().catch(console.error);
 
 // init db
 // console.log('xx',DatabaseConfig)
-// DatabaseConfig.Initial()
-
+new DatabaseConfig().testConnections();
 
 // init routes
 app.use('/', require('./routers/client/index.router.js'));

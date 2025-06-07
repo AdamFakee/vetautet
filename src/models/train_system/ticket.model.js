@@ -1,7 +1,7 @@
 const { DatabaseConfig } = require('../../configs/database.config');
 const { DataTypes } = require('sequelize');
 
-const ticketSchema = DatabaseConfig.sequelize_train_system.define("Ticket", {
+const ticketSchema = new DatabaseConfig().getMasterDb().define("Ticket", {
     ticket_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -33,6 +33,10 @@ const ticketSchema = DatabaseConfig.sequelize_train_system.define("Ticket", {
         type: DataTypes.DATE,
         allowNull: true,
     },
+    // direction: {
+    //     type: DataTypes.STRING(20),
+    //     allowNull: false,
+    // },
     created_at: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,

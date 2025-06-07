@@ -1,150 +1,112 @@
 'use strict'
-const Sequelize = require('sequelize');
 require('dotenv').config();
- 
-
+const Sequelize = require('sequelize');
 
 class Database {
-    static sequelize_train_system_user;
-    static sequelize_train_system_north_to_sourth;
-    static sequelize_train_system_sourth_to_north;
-    static sequelize_train_system;
+  constructor() {
+    this.masterDb = this.createConnection(1433, 'MASTER DB');
+    this.slaveDb = this.createConnection(49781, 'SLAVE DB'); 
+    this.getDetailedInfo()
+  }
 
+  createConnection (port, typeDbName) {
+    return new Sequelize('vettautet', 'sa', '123456', {
+      host: 'localhost',       // địa chỉ IP của máy chủ
+      dialect: 'mssql',
+      port: port,               
+      dialectOptions: {
+        options: {
+          encrypt: false,         // nếu không dùng SSL
+          trustServerCertificate: true,
+        }
+      },
+      pool: {
+        max: 15,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+      },
+      logging: (sql) => console.log(`${typeDbName} DB::::`, sql)}
+    );
+  }
+  async testConnections() {
+    try {
+      console.log('🔍 Testing Master Database Connection...');
+      await this.masterDb.authenticate();
+      console.log('✅ Kết nối tới Master Database thành công!');
 
-    static test () {
-        const sequelize = new Sequelize(
-            'train_system_user', // tên database
-            'adam', // username
-            process.env.DATABASE_PASSWORD, // password
-            {
-                host: 3308,
-                dialect: 'mysql',
-                port: 3308,
-                pool: {
-                    max: 30,        // ✅ Giảm từ 50 → 30 (vì có 4 DB)
-                    min: 2,         // ✅ Giảm từ 10 → 2 
-                    acquire: 60000, // ✅ Tăng từ 30s → 60s
-                    idle: 10000,    // ✅ Tăng từ 5s → 10s
-                    evict: 1000,    // ✅ Thêm evict interval
-                },
-                benchmark: true,
-                logging: false, // ✅ Tắt logging trong production
-                
-                // ✅ Thêm retry logic
-                // retry: {
-                //     max: 3,
-                //     match: [
-                //         Sequelize.ConnectionError,
-                //         Sequelize.ConnectionTimedOutError,
-                //         Sequelize.TimeoutError,
-                //     ],
-                // },
-                
-                // // ✅ Thêm connection options
-                // dialectOptions: {
-                //     connectTimeout: 30000,     // 30s connection timeout
-                //     acquireTimeout: 60000,     // 60s acquire timeout  
-                //     timeout: 60000,            // 60s query timeout
-                //     reconnect: true,
-                //     // ✅ Tối ưu MySQL settings
-                //     supportBigNumbers: true,
-                //     bigNumberStrings: true,
-                //     multipleStatements: false,
-                //     flags: ['-FOUND_ROWS']
-                // },
-                
-                // // ✅ Query optimization
-                // define: {
-                //     charset: 'utf8mb4',
-                //     collate: 'utf8mb4_unicode_ci',
-                //     timestamps: true,
-                //     freezeTableName: true,     // Không pluralize table names
-                //     underscored: false,        // camelCase thay vì snake_case
-                // }
-            },
-        );
-        return this.Connect(sequelize, 'usersssssss');
+      console.log('🔍 Testing Slave Database Connection...');
+      await this.slaveDb.authenticate();
+      console.log('✅ Kết nối tới Slave Database thành công!');
+    } catch (error) {
+      console.error('❌ Lỗi kết nối:', error);
     }
-    static Initial () {
-        this.sequelize_train_system = this.CreateConnect('train_system');
-        this.sequelize_train_system_north_to_sourth = this.CreateConnect('train_system_north_to_south');
-        this.sequelize_train_system_sourth_to_north = this.CreateConnect('train_system_south_to_north');
-        this.sequelize_train_system_user = this.CreateConnect('train_system_user')
-        this.test()
-    }
+  }
 
-    static CreateConnect (databaseName) {
-        const sequelize = new Sequelize(
-            databaseName, // tên database
-            process.env.DATABASE_USER_NAME, // username
-            process.env.DATABASE_PASSWORD, // password
-            {
-                host: process.env.DATABASE_HOST,
-                dialect: 'mysql',
-                port: 3306,
-                pool: {
-                    max: 30,        // ✅ Giảm từ 50 → 30 (vì có 4 DB)
-                    min: 2,         // ✅ Giảm từ 10 → 2 
-                    acquire: 60000, // ✅ Tăng từ 30s → 60s
-                    idle: 10000,    // ✅ Tăng từ 5s → 10s
-                    evict: 1000,    // ✅ Thêm evict interval
-                },
-                benchmark: true,
-                logging: false, // ✅ Tắt logging trong production
-                
-                // ✅ Thêm retry logic
-                // retry: {
-                //     max: 3,
-                //     match: [
-                //         Sequelize.ConnectionError,
-                //         Sequelize.ConnectionTimedOutError,
-                //         Sequelize.TimeoutError,
-                //     ],
-                // },
-                
-                // // ✅ Thêm connection options
-                // dialectOptions: {
-                //     connectTimeout: 30000,     // 30s connection timeout
-                //     acquireTimeout: 60000,     // 60s acquire timeout  
-                //     timeout: 60000,            // 60s query timeout
-                //     reconnect: true,
-                //     // ✅ Tối ưu MySQL settings
-                //     supportBigNumbers: true,
-                //     bigNumberStrings: true,
-                //     multipleStatements: false,
-                //     flags: ['-FOUND_ROWS']
-                // },
-                
-                // // ✅ Query optimization
-                // define: {
-                //     charset: 'utf8mb4',
-                //     collate: 'utf8mb4_unicode_ci',
-                //     timestamps: true,
-                //     freezeTableName: true,     // Không pluralize table names
-                //     underscored: false,        // camelCase thay vì snake_case
-                // }
-            },
-        );
-        return this.Connect(sequelize, databaseName);
-    }
-    static Connect (sequelize, databaseName) {
-        sequelize.authenticate().then(() => {
-            console.log('Kết nối db thành công!' + ':::::' + databaseName);
-        }).catch((error) => {
-            console.error('Kết nối db thất bại: ' + ':::::' + databaseName, error);
-        });
-        return sequelize;
-    }
+  // check thông số kết nối để xem đúng port + server hay chưa
+  async getDetailedInfo() {
+    try {
+      console.log('\n📊 Chi tiết kết nối Master Database:');
+      const masterInfo = await this.masterDb.query(`
+        SELECT 
+          @@SERVERNAME as ServerName,
+          @@SERVICENAME as ServiceName,
+          DB_NAME() as DatabaseName,
+          SERVERPROPERTY('InstanceName') as InstanceName,
+          SERVERPROPERTY('ServerName') as FullServerName,
+          CONNECTIONPROPERTY('local_net_address') as LocalAddress,
+          CONNECTIONPROPERTY('local_tcp_port') as LocalPort
+      `, {
+        type: Sequelize.QueryTypes.SELECT
+      });
+      console.table(masterInfo[0]);
 
-    // static getInstance() {
-    //     if(!this.Instance) {
-    //         console.log('loerrr')
-    //         this.Instance = new Database();
-    //         return this.Instance;
-    //     }
-    //     return this.Instance
-    // }
+      console.log('\n📊 Chi tiết kết nối Slave Database:');
+      const slaveInfo = await this.slaveDb.query(`
+        SELECT 
+          @@SERVERNAME as ServerName,
+          @@SERVICENAME as ServiceName,
+          DB_NAME() as DatabaseName,
+          SERVERPROPERTY('InstanceName') as InstanceName,
+          SERVERPROPERTY('ServerName') as FullServerName,
+          CONNECTIONPROPERTY('local_net_address') as LocalAddress,
+          CONNECTIONPROPERTY('local_tcp_port') as LocalPort
+      `, {
+        type: Sequelize.QueryTypes.SELECT
+      });
+      console.table(slaveInfo[0]);
+
+      // So sánh để xem có khác nhau không
+      const masterPort = masterInfo[0].LocalPort;
+      const slavePort = slaveInfo[0].LocalPort;
+      const masterInstance = masterInfo[0].InstanceName;
+      const slaveInstance = slaveInfo[0].InstanceName;
+
+      console.log('\n🔍 Phân tích kết nối:');
+      console.log(`Master Port: ${masterPort}, Instance: ${masterInstance || 'Default'}`);
+      console.log(`Slave Port: ${slavePort}, Instance: ${slaveInstance || 'Default'}`);
+      
+      if (masterPort === slavePort && masterInstance === slaveInstance) {
+        console.log('⚠️  CẢNH BÁO: Cả hai đang kết nối tới cùng một instance!');
+        return false;
+      } else {
+        console.log('✅ Kết nối tới các instance khác nhau!');
+        return true;
+      }
+
+    } catch (error) {
+      console.error('❌ Lỗi khi lấy thông tin database:', error);
+      return false;
+    }
+  }
+
+  getMasterDb() {
+    return this.masterDb;
+  }
+
+  getSlaveDb() {
+    return this.slaveDb;
+  }
 }
 
-Database.Initial()
 module.exports.DatabaseConfig = Database;

@@ -1,9 +1,9 @@
-const { DatabaseConfig } = require('../../../configs/database.config');
+const { DatabaseConfig } = require('../../configs/database.config');
 const { DataTypes } = require('sequelize');
 
-const ticketPurchaseSchema = DatabaseConfig.sequelize_train_system_north_to_sourth.define("TicketPurchase", {
-    purchase_id: {
-        type: DataTypes.INTEGER,
+const ticketPurchaseSchema = new DatabaseConfig().getSlaveDb().define("TicketPurchase", {
+    id: {
+        type: DataTypes.UUID,
         primaryKey: true,
         autoIncrement: true,
     },
@@ -20,12 +20,6 @@ const ticketPurchaseSchema = DatabaseConfig.sequelize_train_system_north_to_sour
     ticket_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-            model: 'tickets',
-            key: 'ticket_id',
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
     },
     purchase_time: {
         type: DataTypes.DATE,
@@ -43,4 +37,4 @@ const ticketPurchaseSchema = DatabaseConfig.sequelize_train_system_north_to_sour
 });
 
 
-module.exports.ticketPurchaseModel_north_to_sourth = ticketPurchaseSchema;
+module.exports.ticketPurchaseModel_slave = ticketPurchaseSchema;

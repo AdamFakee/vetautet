@@ -2,8 +2,6 @@
 const { groupHelper } = require("../../helpers/group.helper");
 const { randomHelper } = require("../../helpers/random.helper");
 const { rawQueryFrameHelper } = require("../../helpers/rawQueryFrame.helper");
-const { ticketModel_north_to_sourth } = require("../../models/distributed/train_system_north_to_sourth/ticket.model");
-const { ticketModel_sourth_to_north } = require("../../models/distributed/train_system_sourth_to_nourth/ticket.model");
 const { ticketModel } = require("../../models/train_system/ticket.model");
 const { scheduleService } = require("./schedule.service");
 
@@ -25,23 +23,6 @@ const getAllTicketsByScheduleId = async (schedule_id) => {
 }
 
 const getOneTicketByTicketId = async (ticket_id, direction, opts={}) => {
-    if(direction == 'south_to_north') {
-        return await ticketModel_sourth_to_north.findOne({
-            where: {
-                ticket_id,
-                ...opts
-            }, 
-            raw: true,
-        })
-    } else {
-        return await ticketModel_north_to_sourth.findOne({
-            where: {
-                ticket_id,
-                ...opts
-            }, 
-            raw: true,
-        })
-    }
     return await ticketModel.findOne({
         where: {
             ticket_id,
@@ -52,12 +33,8 @@ const getOneTicketByTicketId = async (ticket_id, direction, opts={}) => {
 }
 
 const createOneTicket = async (payload) => {
-    // return await ticketModel.create(payload);
-    const { schedule_id, seat_number, price} = payload;
-    const query = `
-        CALL AddNewTicket(${schedule_id}, '${seat_number}', ${price})
-    `
-    return await rawQueryFrameHelper(query)
+    // payload.direction = payload.direction || 'north_to_south';
+    return await ticketModel.create(payload);
 }
 
 const createListTicketsByAmount = async (amount, payload) => {
@@ -76,7 +53,6 @@ const createListTicketsByAmount = async (amount, payload) => {
 const createListTickets = async () => {
     const cnt = 1;
     const results = await scheduleService.getAllSchedulesJoinTrainsTable();
-    console.log(results)
     if(results.length === 0) {
         throw new Error('Err::: not found schedules');
     }
@@ -91,7 +67,6 @@ const createListTickets = async () => {
         for(let j = 1; j <= totalOfSeat; j++) {
             const seatNumber = groupHelper.seatNumberContributor(j) + `-${j}`;
             ticket.seat_number = seatNumber;
-            console.log(ticket)
             promises.push(createOneTicket(ticket));
         }
     }
@@ -100,23 +75,13 @@ const createListTickets = async () => {
 }
 
 const editOneTicketByTicketId = async (ticket_id, direction, payload, opts = {}) => {
-    if(direction == 'south_to_north') {
-        return await ticketModel_sourth_to_north.update(payload, {
-            where: { 
-                ticket_id,
-            },
-            raw: true,
-            ...opts
-        });
-    } else {
-        return await ticketModel_north_to_sourth.update(payload, {
-            where: { 
-                ticket_id,
-            },
-            raw: true,
-            ...opts
-        });
-    }
+    return await ticketModel.update(payload, {
+        where: { 
+            ticket_id,
+        },
+        raw: true,
+        ...opts
+    });
 }
 
 module.exports.ticketService = {

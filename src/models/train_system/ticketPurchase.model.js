@@ -1,7 +1,7 @@
 const { DatabaseConfig } = require('../../configs/database.config');
 const { DataTypes } = require('sequelize');
 
-const ticketPurchaseSchema = DatabaseConfig.sequelize_train_system.define("TicketPurchase", {
+const ticketPurchaseSchema = new DatabaseConfig().getMasterDb().define("TicketPurchase", {
     purchase_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

@@ -1,7 +1,7 @@
-const { DatabaseConfig } = require('../../../configs/database.config');
+const { DatabaseConfig } = require('../../configs/database.config');
 const { DataTypes } = require('sequelize');
 
-const keyTokenSchema = DatabaseConfig.sequelize_train_system_user.define("KeyToken", {
+const keyTokenSchema = new DatabaseConfig().getSlaveDb().define("KeyToken", {
     user_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -44,4 +44,4 @@ const keyTokenSchema = DatabaseConfig.sequelize_train_system_user.define("KeyTok
 });
 
 
-module.exports.keyTokenModel_user = keyTokenSchema;
+module.exports.keyTokenModel_slave = keyTokenSchema;

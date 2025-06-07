@@ -1,7 +1,7 @@
 const { DatabaseConfig } = require('../../configs/database.config');
 const { DataTypes } = require('sequelize');
 
-const keyTokenSchema = DatabaseConfig.sequelize_train_system.define("KeyToken", {
+const keyTokenSchema = new DatabaseConfig().getMasterDb().define("KeyToken", {
     user_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

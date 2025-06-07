@@ -17,38 +17,38 @@ const failedRequests = new Counter('failed_requests');
 const conflictErrors = new Counter('conflict_errors');
 const successRate = new Rate('success_rate');
 
-const host = 'http://localhost:3001'
+const host = 'http://192.168.1.26:3001'
 
 
 export const options = {
   scenarios: {
     api_1_group: {
       executor: 'constant-arrival-rate', // Sử dụng executor constant-vus để giữ số lượng VUs cố định
-      maxVUs: 500, // 10 người dùng cho API A
-      rate: 700,
+      maxVUs: 1000, // n người dùng
+      rate: 500,
       preAllocatedVUs: 1,
-      duration: '4s', // Chạy trong 30 giây
-      exec: 'kichBan_1', // Gọi hàm apiA
+      duration: '1m', // Chạy trong n giây
+      exec: 'kichBan_1', // Gọi hàm 
+      startTime: '20s', // Bắt đầu sau 20 giây để tránh xung đột ban đầu
       tags: { group: 'api_a' }, // Thêm tag để phân biệt nhóm
     },
     api_2_group: {
       executor: 'constant-arrival-rate',
-      maxVUs: 1000, // 15 người dùng cho API B
-      duration: '10s',
+      maxVUs: 1000,
+      duration: '40s',
       preAllocatedVUs: 0,
-      rate: 500,
-      exec: 'kichBan_2', // Gọi hàm apiB
-      startTime: '10s', // Bắt đầu sau 5 giây để tránh xung đột ban đầu
+      rate: 700,
+      exec: 'kichBan_2',
       tags: { group: 'api_b' },
     },
     api_3_group: {
       executor: 'constant-arrival-rate',
-      rate: 500,
+      rate: 1000,
       preAllocatedVUs: 0,
-      maxVUs: 1000, // 15 người dùng cho API B
+      maxVUs: 700, 
       duration: '30s',
-      exec: 'kichBan_3', // Gọi hàm apiB
-      startTime: '5s', // Bắt đầu sau 5 giây để tránh xung đột ban đầu
+      exec: 'kichBan_3', 
+      startTime: '5s',
       tags: { group: 'api_b' },
     },
   },
@@ -278,7 +278,7 @@ export function kichBan_1() {
 
 // lấy route 
 export function kichBan_2() {
-  const url = host + '/route?limit=10&page=' + getRandom(30);
+  const url = host + '/route?limit=10&page=' + getRandom(16);
   const res = http.get(url);
   
   // Track timing cho tất cả response
@@ -288,6 +288,7 @@ export function kichBan_2() {
   
   // Kiểm tra lỗi server hoặc connection failed
   if (!res || res.status >= 500) {
+    console.log('Route API server error:', res.body)
     failedRequests.add(1);
     successRate.add(false);
     return;
@@ -302,13 +303,15 @@ export function kichBan_2() {
     successRate.add(false);
   }
 }
-
+function randomFloatFromInterval(a, b) {
+  return parseInt(Math.random() * (b - a) + a);
+}
 function random_url() {
   const random = Math.random();
   if (random >= 0.5) {
-    return 'north_to_south' + getRandom(12300);
+    return 'north_to_south/' + randomFloatFromInterval(67887,95981);
   } else {
-    return 'south_to_north' + getRandom(12300);
+    return 'south_to_north/' + randomFloatFromInterval(67887,95981);
   }
 }
 
@@ -324,6 +327,7 @@ export function kichBan_3() {
   
   // Kiểm tra lỗi server hoặc connection failed
   if (!res || res.status >= 500) {
+    console.log('ticket search::err::::', res.body)
     failedRequests.add(1);
     successRate.add(false);
     return;

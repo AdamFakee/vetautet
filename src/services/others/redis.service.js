@@ -31,6 +31,10 @@ class RedisService {
         return JSON.parse(value);
     }
 
+    async delString(key) {
+        return this.redis.getDel(key);
+    }
+
     // bit map
     async setBitMap(key, offset, value = 1) {
         await this.redis.setBit(key, offset, value);

@@ -1,7 +1,7 @@
 const { DatabaseConfig } = require('../../configs/database.config');
 const { DataTypes } = require('sequelize');
 
-const routeSchema = DatabaseConfig.sequelize_train_system.define("Route", {
+const routeSchema = new DatabaseConfig().getMasterDb().define("Route", {
     route_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

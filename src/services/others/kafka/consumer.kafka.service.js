@@ -65,23 +65,20 @@ class TicketConsumer {
     }
 
     async handleTicketHold(data) {
-        console.log('hold')
         const { ticketId, userId, direction } = data;
-        // const { TICKET_PENDING, TICKET_PENDING_TTL  } = redisConst.hash;
-
-        // const transaction = await sequelize.transaction();
+        const { TICKET_PENDING } = redisConst.hash;
         try {
-            console.log('start holding:::', data)
             await ticketService.editOneTicketByTicketId(ticketId, direction, {
                 status: 'pending',
             })
-            // await transaction.commit();
 
-            // // ticketId = userId  
-            // await redisService.setHash(TICKET_PENDING, ticketId, userId, TICKET_PENDING_TTL);
         } catch (e) {
             console.log('holding::::err::::', e)
-            // await transaction.rollback()
+            await redisService.delFieldInHashByFieldName(TICKET_PENDING, ticketId)
+            await redisService.delString(ticketId);
+            await ticketService.editOneTicketByTicketId(ticketId, direction, {
+                status: 'available',
+            })
             throw e
         } 
     }
@@ -92,40 +89,27 @@ class TicketConsumer {
         
         const { TICKET_PENDING } = redisConst.hash;
 
-        // field name in redis hash
-        // const ticketField = redisHelper.createTicketFieldName(ticketId, userId);
-        
-        // const transaction = await sequelize.transaction();
         try {
             await ticketService.editOneTicketByTicketId(ticketId, direction, {
                 status: 'available',
             })
 
-            // await transaction.commit();
-
-            // await redisService.delFieldInHashByFieldName(TICKET_PENDING, ticketField)
         } catch (e) {
-            // await transaction.rollback()
             console.log('release::::err::::', e)
+            await redisService.delFieldInHashByFieldName(TICKET_PENDING, ticketId)
+            await redisService.delString(ticketId);
+            await ticketService.editOneTicketByTicketId(ticketId, direction, {
+                status: 'available',
+            })
         }
     }
 
     async handlePaymentSuccess(data) {
         console.log('start payment:::', data)
+        const { TICKET_PENDING } = redisConst.hash;
         const { ticketId, userId, direction } = data;
         
-        const { TICKET_PENDING, TICKET_SOLD } = redisConst.hash;
 
-        // field name in redis hash
-        // const ticketField = redisHelper.createTicketFieldName(ticketId, userId);
-
-        // const ticketHolded = await redisService.getHashByFieldName(TICKET_PENDING, ticketField)
-
-        // if(!ticketHolded) {
-        //     throw ConflictRequestError('err::: không giữ vé nên không thể thanh toán được');
-        // }
-        
-        // const transaction = await sequelize.transaction();
         try {
             await ticketService.editOneTicketByTicketId(ticketId, direction, {
                 status: 'booked',
@@ -135,14 +119,14 @@ class TicketConsumer {
                 user_id: userId, ticket_id: ticketId, ...data
             })
 
-            // await transaction.commit();
 
-            // await redisService.setString(ticketId, ticket, redisConst.string.TTL)
-            // await redisService.delFieldInHashByFieldName(TICKET_PENDING, ticketField)
         } catch (e) {
             console.log('payment::::err::::', e)
-            // await redisService.delFieldInHashByFieldName(TICKET_SOLD, ticketId)
-            // await transaction.rollback()
+            await redisService.delFieldInHashByFieldName(TICKET_PENDING, ticketId)
+            await redisService.delString(ticketId);
+            await ticketService.editOneTicketByTicketId(ticketId, direction, {
+                status: 'available',
+            })
         }
     }
 
